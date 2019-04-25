@@ -38,6 +38,7 @@ object SuccessfulAttempts {
 
   }
 
+  // this is ok, but Intellij fails at highlighting that. When we use a trait instead of typealias, we're fine though
   object SubtypeGuardedTypeAlias {
 
     trait LowPriorityMyBox {
@@ -52,7 +53,6 @@ object SuccessfulAttempts {
 
     private sealed trait CatsSemigroupalSemigroupKInvariant[F[_[_]]]
     private object CatsSemigroupalSemigroupKInvariant {
-      // this is ok, but Intellij fails at highlighting that. When we use a trait instead of typealias, we're fine though
       type SemigroupalSemigroupKInvariant[F[_]] <: cats.Semigroupal[F] with cats.SemigroupK[F] with cats.Invariant[F]
       implicit def get(implicit guard: CatsIsAvailable): CatsSemigroupalSemigroupKInvariant[SemigroupalSemigroupKInvariant] = null
     }

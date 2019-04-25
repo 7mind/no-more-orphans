@@ -24,7 +24,7 @@ trait LowPriorityMyBox {
   type Fixup[A] = A
 
   implicit def optionalCatsSemigroupalSemigroupKInvariantForMyBox[F[_[_]]: CatsSemigroupalSemigroupKInvariant]: Fixup[F[MyBox]] = {
-    new SemigroupalSemigroupKInvariant[MyBox] {
+    new ImpllSemigroupalSemigroupKInvariant[MyBox] {
       def combineK[A](x: MyBox[A], y: MyBox[A]): MyBox[A] = y
       def product[A, B](fa: MyBox[A], fb: MyBox[B]): MyBox[(A, B)] = MyBox((fa.get, fb.get))
       def imap[A, B](fa: MyBox[A])(f: A => B)(g: B => A): MyBox[B] = MyBox(f(fa.get))
@@ -43,9 +43,9 @@ private object CatsIsAvailable {
   implicit def get[F[_[_]]: CatsFunctor]: CatsIsAvailable = null
 }
 
-private trait SemigroupalSemigroupKInvariant[K[_]] extends cats.Semigroupal[K] with cats.SemigroupK[K] with cats.Invariant[K]
-
 private sealed trait CatsSemigroupalSemigroupKInvariant[F[_[_]]]
 private object CatsSemigroupalSemigroupKInvariant {
-  implicit def get(implicit haveCats: CatsIsAvailable): CatsSemigroupalSemigroupKInvariant[SemigroupalSemigroupKInvariant] = null
+  implicit def get(implicit haveCats: CatsIsAvailable): CatsSemigroupalSemigroupKInvariant[ImpllSemigroupalSemigroupKInvariant] = null
 }
+
+private trait ImpllSemigroupalSemigroupKInvariant[K[_]] extends cats.Semigroupal[K] with cats.SemigroupK[K] with cats.Invariant[K]
