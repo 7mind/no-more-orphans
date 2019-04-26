@@ -1,5 +1,7 @@
 package mylib
 
+import scalaz.Alpha.G
+
 final case class MyBox[A](get: A)
 
 object MyBox extends LowPriorityMyBox {
@@ -21,15 +23,14 @@ object MyBox extends LowPriorityMyBox {
 
 trait LowPriorityMyBox {
 
-  type Fixup[A] = A
-
-  implicit def optionalCatsSemigroupalSemigroupKInvariantForMyBox[F[_[_]]: CatsSemigroupalSemigroupKInvariant]: Fixup[F[MyBox]] = {
+  implicit def optionalCatsSemigroupalSemigroupKInvariantForMyBox[F[_[_]]: CatsSemigroupalSemigroupKInvariant, G](implicit ev: F[MyBox] <:< G): G = {
     new ImpllSemigroupalSemigroupKInvariant[MyBox] {
       def combineK[A](x: MyBox[A], y: MyBox[A]): MyBox[A] = y
       def product[A, B](fa: MyBox[A], fb: MyBox[B]): MyBox[(A, B)] = MyBox((fa.get, fb.get))
       def imap[A, B](fa: MyBox[A])(f: A => B)(g: B => A): MyBox[B] = MyBox(f(fa.get))
-    }.asInstanceOf[F[MyBox]]
+    }.asInstanceOf[G]
   }
+
 
 }
 

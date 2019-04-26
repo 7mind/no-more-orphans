@@ -5,8 +5,12 @@ import org.scalatest.WordSpec
 
 import scala.util.Try
 import cats.implicits._
+import org.scalactic.source.Position
+
+import scala.language.implicitConversions
 
 class CatsMyResourceTest extends WordSpec {
+  implicit val Pos: Position = Position("", "", 1)
 
   "cats-specific syntax is automatically accessible" in {
     val resource = MyResource.make(Try(1))(_ => Try(()))

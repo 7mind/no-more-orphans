@@ -1,8 +1,13 @@
 
 import mylib.{MyBox, MyMonad}
+import org.scalactic.source.Position
 import org.scalatest.WordSpec
 
+import scala.language.implicitConversions
+
 final class NoCatsMyMonadMyBoxTest extends WordSpec {
+  implicit val Pos: Position = Position("", "", 1)
+
   "can't refer to optional integrations" in {
 //    MyBox.catsMonadForBox // inacessible
 //    MyMonad.fromCatsMonad // inacessible
@@ -13,7 +18,17 @@ final class NoCatsMyMonadMyBoxTest extends WordSpec {
     implicitly[MyMonad[List]] // non-optional summon from MyMonad object works
     implicitly[MyMonad[MyBox]] // non-optional summon from MyBox object works
     implicitly[MyBox[Unit] =:= MyBox[Unit]] // non-optional summon from MyBox object works
-    assertTypeError("implicitly[TestTC[MyBox]]") // exhaustive search of MyBox object does not cause classpath errors
+//    implicitly[TestTC[MyBox]]
+    // [error] 22 |    implicitly[TestTC[MyBox]]
+    // [error]    |                             ^
+    // [error]    |no implicit argument of type TestTC[mylib.MyBox] was found for parameter ev of method implicitly in object DottyPredef.
+    // [error]    |I found:
+    // [error]    |
+    // [error]    |    mylib.MyBox.optionalCatsFunctorForMyBox[F](
+    // [error]    |      /* missing */implicitly[mylib.CatsFunctor[TestTC]]
+    // [error]    |    )
+    // [error]    |
+    // [error]    |But no implicit values were found that match type mylib.CatsFunctor[TestTC].
   }
 }
 

@@ -30,8 +30,8 @@ object SuccessfulAttempts {
       }
     }
 
-    private sealed trait CatsSemigroupalSemigroupKInvariant[F[_[_]]]
-    private object CatsSemigroupalSemigroupKInvariant {
+    private[SuccessfulAttempts] sealed trait CatsSemigroupalSemigroupKInvariant[F[_[_]]]
+    private[SuccessfulAttempts] object CatsSemigroupalSemigroupKInvariant {
       // Note the `<:` instead of `=`, it's important!
       implicit def get[F[_[_]]: CatsSemigroupal, G[_[_]]: CatsSemigroupK, C[_[_]]: CatsInvariant]: CatsSemigroupalSemigroupKInvariant[({ type l[K[_]] <: F[K] with G[K] with C[K] })#l] = null
     }
@@ -51,31 +51,31 @@ object SuccessfulAttempts {
       }
     }
 
-    private sealed trait CatsSemigroupalSemigroupKInvariant[F[_[_]]]
-    private object CatsSemigroupalSemigroupKInvariant {
+    private[SuccessfulAttempts] sealed trait CatsSemigroupalSemigroupKInvariant[F[_[_]]]
+    private[SuccessfulAttempts] object CatsSemigroupalSemigroupKInvariant {
       type SemigroupalSemigroupKInvariant[F[_]] <: cats.Semigroupal[F] with cats.SemigroupK[F] with cats.Invariant[F]
       implicit def get(implicit guard: CatsIsAvailable): CatsSemigroupalSemigroupKInvariant[SemigroupalSemigroupKInvariant] = null
     }
 
   }
 
-  private sealed trait CatsSemigroupal[F[_[_]]]
-  private object CatsSemigroupal {
+  private[SuccessfulAttempts] sealed trait CatsSemigroupal[F[_[_]]]
+  private[SuccessfulAttempts] object CatsSemigroupal {
     implicit val get: CatsSemigroupal[cats.Semigroupal] = null
   }
 
-  private sealed trait CatsSemigroupK[F[_[_]]]
-  private object CatsSemigroupK {
+  private[SuccessfulAttempts] sealed trait CatsSemigroupK[F[_[_]]]
+  private[SuccessfulAttempts] object CatsSemigroupK {
     implicit val get: CatsSemigroupK[cats.SemigroupK] = null
   }
 
-  private sealed trait CatsInvariant[F[_[_]]]
-  private object CatsInvariant {
+  private[SuccessfulAttempts] sealed trait CatsInvariant[F[_[_]]]
+  private[SuccessfulAttempts] object CatsInvariant {
     implicit val get: CatsInvariant[cats.Invariant] = null
   }
 
-  private sealed trait CatsIsAvailable
-  private object CatsIsLoaded {
+  private[SuccessfulAttempts] sealed trait CatsIsAvailable
+  private[SuccessfulAttempts] object CatsIsLoaded {
     implicit def get[F[_[_]]: CatsFunctor]: CatsIsAvailable = null
   }
 }

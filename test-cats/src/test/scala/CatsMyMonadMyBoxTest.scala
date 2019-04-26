@@ -1,32 +1,36 @@
-import cats.{Bimonad, Invariant, SemigroupK, Semigroupal}
+import cats.{Invariant, SemigroupK, Semigroupal}
 import cats.implicits._
 import mylib._
+import org.scalactic.source.Position
 import org.scalatest.WordSpec
 
+import scala.language.implicitConversions
+
 class CatsMyMonadMyBoxTest extends WordSpec {
+  implicit val Pos: Position = Position("", "", 1)
 
   "cats.Functor instance for MyBox works" in {
-    assert(MyBox(5).map(_ + 5) == MyBox(10))
+    assertResult(MyBox(5).map(_ + 5), "")(MyBox(10))
   }
 
   "There is no cats.Defer for MyBox" in {
-    assertTypeError("implicitly[cats.Defer[MyBox]]")
+    implicitly[scala.implicits.Not[cats.Defer[MyBox]]]
   }
 
   "MyMonad for MyBox" in {
-    assert(MyMonad[MyBox].pure(5) == MyBox(5))
+    assertResult(MyMonad[MyBox].pure(5), "")(MyBox(5))
   }
 
   "Semigroupal/SemigroupK/Invariant for MyBox" in {
     Semigroupal[MyBox]
     SemigroupK[MyBox]
-    implicitly[Invariant[MyBox] with Semigroupal[MyBox]]
-    implicitly[SemigroupK[MyBox] with Semigroupal[MyBox]]
-    implicitly[SemigroupK[MyBox] with Invariant[MyBox] with Semigroupal[MyBox]]
+    implicitly[Invariant[MyBox] & Semigroupal[MyBox]]
+    implicitly[SemigroupK[MyBox] & Semigroupal[MyBox]]
+    implicitly[SemigroupK[MyBox] & Invariant[MyBox] & Semigroupal[MyBox]]
     Invariant[MyBox]
   }
 
   "MyMonad from cats.Monad" in {
-    assert(MyMonad[Option].pure(5) contains 5)
+    assertResult(MyMonad[Option].pure(5).get, "")(5)
   }
 }
