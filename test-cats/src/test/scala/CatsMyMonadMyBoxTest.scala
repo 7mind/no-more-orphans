@@ -1,3 +1,4 @@
+import cats.data.NonEmptyList
 import cats.{Invariant, SemigroupK, Semigroupal}
 import cats.implicits._
 import mylib._
@@ -32,5 +33,9 @@ class CatsMyMonadMyBoxTest extends WordSpec {
 
   "MyMonad from cats.Monad" in {
     assertResult(MyMonad[Option].pure(5).get, "")(5)
+  }
+
+  "MyMonad for NonEmptyList" in {
+    assertResult(MyMonad[NonEmptyList].pure(5), "")(NonEmptyList.of(5))
   }
 }

@@ -1,5 +1,7 @@
 package mylib
 
+import cats.data.NonEmptyList
+
 trait MyMonad[F[_]] {
   def pure[A](a: A): F[A]
   def flatMap[A, B](fa: F[A])(f: A => F[B]): F[B]
@@ -8,11 +10,15 @@ trait MyMonad[F[_]] {
 object MyMonad extends LowPriorityMyMonad {
   def apply[F[_] : MyMonad]: MyMonad[F] = implicitly
 
-  implicit def myMonadForList: MyMonad[List] = new MyMonad[List] {
+  implicit val myMonadForList: MyMonad[List] = new MyMonad[List] {
     def pure[A](a: A): List[A] = List(a)
-
     def flatMap[A, B](fa: List[A])(f: A => List[B]): List[B] = fa.flatMap(f)
   }
+
+  implicit def optionalMyMonadForCatsNonEmptyList[F[_]: CatsNel]: MyMonad[F] = new MyMonad[NonEmptyList] {
+    override def pure[A](a: A): NonEmptyList[A] = NonEmptyList.of(a)
+    override def flatMap[A, B](fa: NonEmptyList[A])(f: A => NonEmptyList[B]): NonEmptyList[B] = fa.flatMap(f)
+  }.asInstanceOf[MyMonad[F]]
 }
 
 trait LowPriorityMyMonad {
@@ -41,4 +47,9 @@ private object CatsMonad {
 private sealed trait ScalazMonad[M[_[_]]]
 private object ScalazMonad {
   implicit val get: CatsMonad[scalaz.Monad] = null
+}
+
+private sealed trait CatsNel[F[_]]
+private object CatsNel {
+  implicit val get: CatsNel[NonEmptyList] = null
 }
