@@ -11,9 +11,8 @@ cd no-more-orphans
 sbt test
 ```
 
-Tested on Scala 2.12.8, 2.13.0-M5, 2.11.8 and [dotty-0.14.0-RC1](https://github.com/7mind/no-more-orphans/tree/dotty)
+Tested on Scala 2.12.8, 2.13.0-M5, 2.11.8 and [dotty-0.16.0-RC3](https://github.com/7mind/no-more-orphans/tree/dotty)
 
-Note that dotty version requires a slightly different, but compatible, encoding (`<:<` evidence at the end) due to pending bugs in dotty:
+Dotty treats intersection types differently, so one of the problems with Scala 2 encoding is manifest for ALL implicits, not just optional:
 
-- https://github.com/lampepfl/dotty/issues/6385
 - https://github.com/lampepfl/dotty/issues/6384
