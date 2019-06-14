@@ -8,7 +8,7 @@ crossScalaVersions := Seq("2.11.12", "2.12.8", "2.13.0-M5")
 
 val cats_effect = "org.typelevel" %% "cats-effect" % "1.2.0"
 val scalaz_core = "org.scalaz" %% "scalaz-core" % "7.2.27"
-val scalatest = "org.scalatest" %% "scalatest" % "3.1.0-SNAP8"
+val scalatest = "org.scalatest" %% "scalatest" % "3.0.8"
 
 scalacOptions in Global ++= Seq("-Xlog-implicits", "-language:higherKinds")
 
