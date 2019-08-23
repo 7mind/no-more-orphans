@@ -11,4 +11,4 @@ cd no-more-orphans
 sbt test
 ```
 
-Tested on Scala 2.12.8, 2.13.0-M5, 2.11.8 and [dotty-0.16.0-RC3](https://github.com/7mind/no-more-orphans/tree/dotty)
+Tested on Scala 2.12.9, 2.13.0, 2.11.12 and [dotty-0.16.0-RC3](https://github.com/7mind/no-more-orphans/tree/dotty)
