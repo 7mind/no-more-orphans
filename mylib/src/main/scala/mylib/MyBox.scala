@@ -1,7 +1,5 @@
 package mylib
 
-import scalaz.Alpha.G
-
 final case class MyBox[A](get: A)
 
 object MyBox extends LowPriorityMyBox {
