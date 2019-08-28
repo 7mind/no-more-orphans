@@ -2,9 +2,9 @@ name := "no-more-orphans-test"
 
 version := "0.1"
 
-scalaVersion := "2.13.0"
+scalaVersion  in ThisBuild := "2.13.0"
 
-crossScalaVersions := Seq("2.11.12", "2.12.9", "2.13.0")
+crossScalaVersions in ThisBuild := Seq("2.11.12", "2.12.9", "2.13.0")
 
 val cats_effect = "org.typelevel" %% "cats-effect" % "2.0.0-RC1"
 val scalaz_core = "org.scalaz" %% "scalaz-core" % "7.2.27"
