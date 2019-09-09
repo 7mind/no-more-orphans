@@ -39,3 +39,20 @@ lazy val testCats = project.in(file("test-cats"))
   )
   .dependsOn(mylib)
 
+lazy val extFunctorFictional = project.in(file("ext-functor-fictional"))
+  .settings(skip in publish := true)
+
+lazy val extFunctor = project.in(file("ext-functor"))
+  .dependsOn(extFunctorFictional % Optional)
+
+lazy val extFunctorDownstream = project.in(file("ext-functor-downstream"))
+  .dependsOn(extFunctor)
+  .settings(
+    libraryDependencies += scalatest % Test withDottyCompat scalaVersion.value,
+  )
+
+lazy val extFunctorNoDownstream = project.in(file("ext-functor-no-downstream"))
+  .dependsOn(extFunctor)
+  .settings(
+    libraryDependencies += scalatest % Test withDottyCompat scalaVersion.value,
+  )
