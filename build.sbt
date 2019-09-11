@@ -2,7 +2,7 @@ name := "no-more-orphans-test"
 
 version := "0.1"
 
-val dottyVersion = "0.16.0-RC3"
+val dottyVersion = "0.18.1-RC1"
 //val dottyVersion = dottyLatestNightlyBuild().get
 
 scalaVersion in Global := dottyVersion
