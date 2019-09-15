@@ -15,7 +15,9 @@ class CatsMyMonadMyBoxTest extends WordSpec {
   }
 
   "There is no cats.Defer for MyBox" in {
-    implicitly[scala.implicits.Not[cats.Defer[MyBox]]]
+    def noImplicit[A](implicit a: A = null): Boolean = a == null
+
+    assertResult(true, "")(noImplicit[cats.Defer[MyBox]])
   }
 
   "MyMonad for MyBox" in {
@@ -25,9 +27,9 @@ class CatsMyMonadMyBoxTest extends WordSpec {
   "Semigroupal/SemigroupK/Invariant for MyBox" in {
     Semigroupal[MyBox]
     SemigroupK[MyBox]
-    implicitly[Invariant[MyBox] & Semigroupal[MyBox]]
-    implicitly[SemigroupK[MyBox] & Semigroupal[MyBox]]
-    implicitly[SemigroupK[MyBox] & Invariant[MyBox] & Semigroupal[MyBox]]
+    implicitly[Invariant[MyBox] with Semigroupal[MyBox]]
+    implicitly[SemigroupK[MyBox] with Semigroupal[MyBox]]
+    implicitly[SemigroupK[MyBox] with Invariant[MyBox] with Semigroupal[MyBox]]
     Invariant[MyBox]
   }
 
