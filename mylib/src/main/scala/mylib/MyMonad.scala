@@ -15,10 +15,10 @@ object MyMonad extends LowPriorityMyMonad {
     def flatMap[A, B](fa: List[A])(f: A => List[B]): List[B] = fa.flatMap(f)
   }
 
-  implicit def optionalMyMonadForCatsNonEmptyList[F[_]: CatsNel]: MyMonad[F] = new MyMonad[NonEmptyList] {
+  implicit def optionalMyMonadForCatsNonEmptyList[F[_]: CatsNel]: MyMonad[NonEmptyList] = new MyMonad[NonEmptyList] {
     override def pure[A](a: A): NonEmptyList[A] = NonEmptyList.of(a)
     override def flatMap[A, B](fa: NonEmptyList[A])(f: A => NonEmptyList[B]): NonEmptyList[B] = fa.flatMap(f)
-  }.asInstanceOf[MyMonad[F]]
+  }
 }
 
 trait LowPriorityMyMonad {
