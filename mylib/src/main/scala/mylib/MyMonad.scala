@@ -15,7 +15,13 @@ object MyMonad extends LowPriorityMyMonad {
     def flatMap[A, B](fa: List[A])(f: A => List[B]): List[B] = fa.flatMap(f)
   }
 
-  implicit val optionalMyMonadForCatsNonEmptyList: MyMonad[cats.data.NonEmptyList] = new MyMonad[NonEmptyList] {
+  /**
+    * `[F[_]: CatsNel]` guard is only required for 2.11, all other versions – 2.12, 2.13, dotty – accept unguarded
+    * {{{
+    * implicit val optionalMyMonadForCatsNonEmptyList: MyMonad[NonEmptyList]
+    * }}}
+    *  */
+  implicit def optionalMyMonadForCatsNonEmptyList[F[_]: CatsNel]: MyMonad[NonEmptyList] = new MyMonad[NonEmptyList] {
     override def pure[A](a: A): NonEmptyList[A] = NonEmptyList.of(a)
     override def flatMap[A, B](fa: NonEmptyList[A])(f: A => NonEmptyList[B]): NonEmptyList[B] = fa.flatMap(f)
   }
@@ -47,4 +53,9 @@ private object CatsMonad {
 private sealed trait ScalazMonad[M[_[_]]]
 private object ScalazMonad {
   implicit val get: CatsMonad[scalaz.Monad] = null
+}
+
+private sealed trait CatsNel[F[_]]
+private object CatsNel {
+  implicit val get: CatsNel[NonEmptyList] = null
 }

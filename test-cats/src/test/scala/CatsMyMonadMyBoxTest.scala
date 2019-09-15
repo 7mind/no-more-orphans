@@ -32,7 +32,7 @@ class CatsMyMonadMyBoxTest extends WordSpec {
   }
 
   "MyMonad for NonEmptyList" in {
-    assert(MyMonad[NonEmptyList] eq MyMonad.optionalMyMonadForCatsNonEmptyList)
+    assert(MyMonad[NonEmptyList].getClass eq MyMonad.optionalMyMonadForCatsNonEmptyList.getClass)
     assert(MyMonad[NonEmptyList].pure(5) == NonEmptyList.of(5))
   }
 }
