@@ -1,12 +1,14 @@
 name := "no-more-orphans-test"
 
-version := "0.1"
+ThisBuild / version := "0.1-SNAPSHOT"
 
-val dottyVersion = "0.18.1-RC1"
+val dottyVersion = "0.19.0-RC1"
 //val dottyVersion = dottyLatestNightlyBuild().get
 
-scalaVersion in Global := dottyVersion
-crossScalaVersions in Global := Seq("2.11.12", "2.12.9", "2.13.0", dottyVersion)
+scalaVersion in Global := crossScalaVersions.value.head
+//crossScalaVersions in Global := Seq("2.11.12", "2.12.10", "2.13.1", dottyVersion)
+//crossScalaVersions in Global := Seq("2.12.10", "2.11.12", "2.13.1", dottyVersion)
+crossScalaVersions in Global := Seq(dottyVersion, "2.12.10", "2.11.12", "2.13.1")
 
 val cats_effect = "org.typelevel" %% "cats-effect" % "2.0.0-RC1"
 val scalaz_core = "org.scalaz" %% "scalaz-core" % "7.2.27"
@@ -40,13 +42,20 @@ lazy val testCats = project.in(file("test-cats"))
   .dependsOn(mylib)
 
 lazy val extFunctorFictional = project.in(file("ext-functor-fictional"))
-  .settings(skip in publish := true)
+  .settings(name := "ext-functor-fictional")
+  .settings(version := "0.0-SNAPSHOT")
 
 lazy val extFunctor = project.in(file("ext-functor"))
+//  .dependsOn(extFunctorFictional % "plugin->default(compile)")
+//  .dependsOn(extFunctorFictional % Compile)
   .dependsOn(extFunctorFictional % Optional)
+//  .dependsOn(extFunctorFictional)
+//  .settings(libraryDependencies += "ext-functor-downstream" %% "ext-functor-downstream" % "0.0-SNAPSHOT")
 
 lazy val extFunctorDownstream = project.in(file("ext-functor-downstream"))
-  .dependsOn(extFunctor)
+  .settings(name := "ext-functor-downstream")
+//  .dependsOn(extFunctor)
+  .settings(libraryDependencies += "extfunctor" %% "extfunctor" % "0.1-SNAPSHOT")
   .settings(
     libraryDependencies += scalatest % Test withDottyCompat scalaVersion.value,
   )
