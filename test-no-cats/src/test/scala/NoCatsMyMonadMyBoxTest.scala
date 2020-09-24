@@ -10,10 +10,15 @@ final class NoCatsMyMonadMyBoxTest extends WordSpec {
   }
 
   "non-cats summons work" in {
+    def searchMyMonad[F[_]](implicit F: MyMonad[F] = null.asInstanceOf[MyMonad[F]]): MyMonad[F] = F
+    def searchMyBox[A](implicit B: MyBox[A] = null.asInstanceOf[MyBox[A]]): MyBox[A] = B
+
     implicitly[MyMonad[List]] // non-optional summon from MyMonad object works
     implicitly[MyMonad[MyBox]] // non-optional summon from MyBox object works
     implicitly[MyBox[Unit] =:= MyBox[Unit]] // non-optional summon from MyBox object works
     assertTypeError("implicitly[TestTC[MyBox]]") // exhaustive search of MyBox object does not cause classpath errors
+    assert(searchMyMonad[Option] == null) // exhaustive search of MyBox object does not cause classpath errors
+    assert(searchMyBox[String] == null) // exhaustive search of MyBox object does not cause classpath errors
   }
 }
 

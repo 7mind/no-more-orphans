@@ -1,6 +1,6 @@
-import cats.data.NonEmptyList
-import cats.{Bimonad, Invariant, SemigroupK, Semigroupal}
+import cats.data.{Chain, NonEmptyList}
 import cats.implicits._
+import cats.{Invariant, SemigroupK, Semigroupal}
 import mylib._
 import org.scalatest.WordSpec
 
@@ -32,7 +32,8 @@ class CatsMyMonadMyBoxTest extends WordSpec {
   }
 
   "MyMonad for NonEmptyList" in {
-    assert(MyMonad[NonEmptyList].getClass eq MyMonad.optionalMyMonadForCatsNonEmptyList.getClass)
+    assert(MyMonad[cats.data.Chain].getClass eq MyMonad.optionalMyMonadForCatsChain.getClass)
+    assert(MyMonad[Chain].pure(5) == Chain(5))
     assert(MyMonad[NonEmptyList].pure(5) == NonEmptyList.of(5))
   }
 }

@@ -18,12 +18,12 @@ object FailedAttempts {
       }
     }
 
-    private sealed trait CatsSemigroupalSemigroupKInvariant {
+    private final abstract class CatsSemigroupalSemigroupKInvariant {
       type Tc[F[_]]
     }
     private object CatsSemigroupalSemigroupKInvariant {
       // Symbol 'type cats.SemigroupK' is missing
-      implicit val get: CatsSemigroupalSemigroupKInvariant {type Tc[F[_]] = cats.SemigroupK[F] with cats.Invariant[F] with cats.Semigroupal[F]} = null
+      @inline implicit final def get: CatsSemigroupalSemigroupKInvariant {type Tc[F[_]] = cats.SemigroupK[F] with cats.Invariant[F] with cats.Semigroupal[F]} = null
     }
 
   }

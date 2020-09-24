@@ -33,17 +33,17 @@ trait LowPriorityMyBox {
 
 }
 
-private sealed trait CatsFunctor[F[_[_]]]
+private final abstract class CatsFunctor[F[_[_]]]
 private object CatsFunctor {
-  implicit val get: CatsFunctor[cats.Functor] = null
+  @inline implicit final def get: CatsFunctor[cats.Functor] = null
 }
 
-private sealed trait CatsIsAvailable
+private final abstract class CatsIsAvailable
 private object CatsIsAvailable {
   implicit def get[F[_[_]]: CatsFunctor]: CatsIsAvailable = null
 }
 
-private sealed trait CatsSemigroupalSemigroupKInvariant[F[_[_]]]
+private final abstract class CatsSemigroupalSemigroupKInvariant[F[_[_]]]
 private object CatsSemigroupalSemigroupKInvariant {
   implicit def get(implicit haveCats: CatsIsAvailable): CatsSemigroupalSemigroupKInvariant[ImpllSemigroupalSemigroupKInvariant] = null
 }

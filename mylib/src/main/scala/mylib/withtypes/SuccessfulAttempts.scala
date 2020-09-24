@@ -30,7 +30,7 @@ object SuccessfulAttempts {
       }
     }
 
-    private sealed trait CatsSemigroupalSemigroupKInvariant[F[_[_]]]
+    private final abstract class CatsSemigroupalSemigroupKInvariant[F[_[_]]]
     private object CatsSemigroupalSemigroupKInvariant {
       // Note the `<:` instead of `=`, it's important!
       implicit def get[F[_[_]]: CatsSemigroupal, G[_[_]]: CatsSemigroupK, C[_[_]]: CatsInvariant]: CatsSemigroupalSemigroupKInvariant[({ type l[K[_]] <: F[K] with G[K] with C[K] })#l] = null
@@ -51,7 +51,7 @@ object SuccessfulAttempts {
       }
     }
 
-    private sealed trait CatsSemigroupalSemigroupKInvariant[F[_[_]]]
+    private final abstract class CatsSemigroupalSemigroupKInvariant[F[_[_]]]
     private object CatsSemigroupalSemigroupKInvariant {
       type SemigroupalSemigroupKInvariant[F[_]] <: cats.Semigroupal[F] with cats.SemigroupK[F] with cats.Invariant[F]
       implicit def get(implicit guard: CatsIsAvailable): CatsSemigroupalSemigroupKInvariant[SemigroupalSemigroupKInvariant] = null
@@ -59,22 +59,22 @@ object SuccessfulAttempts {
 
   }
 
-  private sealed trait CatsSemigroupal[F[_[_]]]
+  private final abstract class CatsSemigroupal[F[_[_]]]
   private object CatsSemigroupal {
-    implicit val get: CatsSemigroupal[cats.Semigroupal] = null
+    @inline implicit final def get: CatsSemigroupal[cats.Semigroupal] = null
   }
 
-  private sealed trait CatsSemigroupK[F[_[_]]]
+  private final abstract class CatsSemigroupK[F[_[_]]]
   private object CatsSemigroupK {
-    implicit val get: CatsSemigroupK[cats.SemigroupK] = null
+    @inline implicit final def get: CatsSemigroupK[cats.SemigroupK] = null
   }
 
-  private sealed trait CatsInvariant[F[_[_]]]
+  private final abstract class CatsInvariant[F[_[_]]]
   private object CatsInvariant {
-    implicit val get: CatsInvariant[cats.Invariant] = null
+    @inline implicit final def get: CatsInvariant[cats.Invariant] = null
   }
 
-  private sealed trait CatsIsAvailable
+  private final abstract class CatsIsAvailable
   private object CatsIsLoaded {
     implicit def get[F[_[_]]: CatsFunctor]: CatsIsAvailable = null
   }

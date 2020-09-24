@@ -33,7 +33,7 @@ sealed trait CatsFunctor extends TcHolder1 {
 }
 
 object CatsFunctor {
-  implicit val get: GetTc1[CatsFunctor, cats.Functor] = {
+  @inline implicit final def get: GetTc1[CatsFunctor, cats.Functor] = {
     new GetTc1[CatsFunctor, cats.Functor] {
       override def equiv[F[_]] = implicitly
     }
@@ -45,7 +45,7 @@ sealed trait CatsMonadTc extends TcHolder1 {
 }
 
 object CatsMonadTc {
-  implicit val get: GetTc1[CatsMonadTc, cats.Monad] = new GetTc1[CatsMonadTc, cats.Monad] {
+  @inline implicit final def get: GetTc1[CatsMonadTc, cats.Monad] = new GetTc1[CatsMonadTc, cats.Monad] {
     override def equiv[F[_]] = implicitly
   }
 }
