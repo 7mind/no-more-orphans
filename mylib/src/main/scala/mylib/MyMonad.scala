@@ -30,13 +30,13 @@ trait LowPriorityMyMonad {
     }
   }
 
-  implicit def optionalMyMonadFromScalazMonad[F[_], M[_[_]]: ScalazMonad](implicit m: M[F]): MyMonad[F] = {
-    val M = m.asInstanceOf[scalaz.Monad[F]]
-    new MyMonad[F] {
-      override def pure[A](a: A): F[A] = M.pure(a)
-      override def flatMap[A, B](fa: F[A])(f: A => F[B]): F[B] = M.bind(fa)(f)
-    }
-  }
+//  implicit def optionalMyMonadFromScalazMonad[F[_], M[_[_]]: ScalazMonad](implicit m: M[F]): MyMonad[F] = {
+//    val M = m.asInstanceOf[scalaz.Monad[F]]
+//    new MyMonad[F] {
+//      override def pure[A](a: A): F[A] = M.pure(a)
+//      override def flatMap[A, B](fa: F[A])(f: A => F[B]): F[B] = M.bind(fa)(f)
+//    }
+//  }
 }
 
 private sealed trait CatsMonad[M[_[_]]]
@@ -44,10 +44,10 @@ private object CatsMonad {
   implicit val get: CatsMonad[cats.Monad] = null
 }
 
-private sealed trait ScalazMonad[M[_[_]]]
-private object ScalazMonad {
-  implicit val get: CatsMonad[scalaz.Monad] = null
-}
+//private sealed trait ScalazMonad[M[_[_]]]
+//private object ScalazMonad {
+//  implicit val get: CatsMonad[scalaz.Monad] = null
+//}
 
 private sealed trait CatsNel[F[_]]
 private object CatsNel {

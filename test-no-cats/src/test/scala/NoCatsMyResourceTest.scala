@@ -1,13 +1,12 @@
 
 import mylib.MyResource
 import org.scalactic.source.Position
-import org.scalatest.WordSpec
+import org.scalatest.wordspec.AnyWordSpec
 
 import scala.util.Try
-
 import scala.language.implicitConversions
 
-class NoCatsMyResourceTest extends WordSpec {
+class NoCatsMyResourceTest extends AnyWordSpec {
   implicit val Pos: Position = Position("", "", 1)
 
   "non-cats methods are accessible, but cats syntax isn't" in {

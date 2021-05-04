@@ -3,11 +3,11 @@ import cats.{Invariant, SemigroupK, Semigroupal}
 import cats.implicits._
 import mylib._
 import org.scalactic.source.Position
-import org.scalatest.WordSpec
+import org.scalatest.wordspec.AnyWordSpec
 
 import scala.language.implicitConversions
 
-class CatsMyMonadMyBoxTest extends WordSpec {
+class CatsMyMonadMyBoxTest extends AnyWordSpec {
   implicit val Pos: Position = Position("", "", 1)
 
   "cats.Functor instance for MyBox works" in {
@@ -15,7 +15,7 @@ class CatsMyMonadMyBoxTest extends WordSpec {
   }
 
   "There is no cats.Defer for MyBox" in {
-    implicitly[scala.implicits.Not[cats.Defer[MyBox]]]
+    implicitly[scala.util.NotGiven[cats.Defer[MyBox]]]
   }
 
   "MyMonad for MyBox" in {

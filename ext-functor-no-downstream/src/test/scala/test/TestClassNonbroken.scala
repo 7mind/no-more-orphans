@@ -2,9 +2,9 @@ package test
 
 import mycats.Functor
 import org.scalactic.source.Position
-import org.scalatest.WordSpec
+import org.scalatest.wordspec.AnyWordSpec
 
-class TestClassNonbroken extends WordSpec {
+class TestClassNonbroken extends AnyWordSpec {
   "summon functor" in {
     println(implicitly[Functor[Option]])
   }

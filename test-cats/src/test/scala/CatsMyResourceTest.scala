@@ -1,7 +1,7 @@
 
 import cats.effect.Resource
 import mylib.MyResource
-import org.scalatest.WordSpec
+import org.scalatest.wordspec.AnyWordSpec
 
 import scala.util.Try
 import cats.implicits._
@@ -9,7 +9,7 @@ import org.scalactic.source.Position
 
 import scala.language.implicitConversions
 
-class CatsMyResourceTest extends WordSpec {
+class CatsMyResourceTest extends AnyWordSpec {
   implicit val Pos: Position = Position("", "", 1)
 
   "cats-specific syntax is automatically accessible" in {

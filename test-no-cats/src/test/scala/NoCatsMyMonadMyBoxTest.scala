@@ -1,11 +1,11 @@
 
 import mylib.{MyBox, MyMonad}
 import org.scalactic.source.Position
-import org.scalatest.WordSpec
+import org.scalatest.wordspec.AnyWordSpec
 
 import scala.language.implicitConversions
 
-final class NoCatsMyMonadMyBoxTest extends WordSpec {
+final class NoCatsMyMonadMyBoxTest extends AnyWordSpec {
   implicit val Pos: Position = Position("", "", 1)
 
   "can't refer to optional integrations" in {
