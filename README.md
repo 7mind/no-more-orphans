@@ -12,3 +12,5 @@ sbt test
 ```
 
 Tested on Scala 2.12.12, 2.13.3, 2.11.12 (2.11 only works partially) and [dotty](https://github.com/7mind/no-more-orphans/tree/dotty)
+
+Addendum: the pattern may not work for non-higher-kinded types on Scala 2 (i.e. plain types like `Int`, not type constructors like `List[_]` or typeclasses like `Monad[_[_]]`).
