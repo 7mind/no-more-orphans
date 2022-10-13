@@ -13,7 +13,10 @@ val scalatest = "org.scalatest" %% "scalatest" % "3.2.13"
 
 scalacOptions in Global ++= Seq("-Xlog-implicits", "-language:higherKinds")
 
+lazy val mylibLib = project.in(file("mylib-lib"))
+
 lazy val mylib = project.in(file("mylib"))
+  .dependsOn(mylibLib % Optional)
   .settings(
     name := "mylib",
     libraryDependencies ++=
@@ -31,6 +34,7 @@ lazy val testNoCats = project.in(file("test-no-cats"))
   .dependsOn(mylib)
 
 lazy val testCats = project.in(file("test-cats"))
+  .dependsOn(mylibLib)
   .settings(
     name := "test-cats",
     libraryDependencies ++= Seq(cats_effect, /*scalaz_core,*/ scalatest % Test)
