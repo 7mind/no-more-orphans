@@ -1,24 +1,24 @@
 
-import mylib.{MyBox, MyMonad}
-import org.scalactic.source.Position
+import mylib._
 import org.scalatest.wordspec.AnyWordSpec
 
 import scala.language.implicitConversions
+import org.scalatest.exceptions.TestFailedException
 
 final class NoCatsMyMonadMyBoxTest extends AnyWordSpec {
-  implicit val Pos: Position = Position("", "", 1)
 
   "can't refer to optional integrations" in {
-//    MyBox.catsMonadForBox // inacessible
-//    MyMonad.fromCatsMonad // inacessible
-//    MyMonad.fromScalazMonad // inacessible
+    val t1 = intercept[TestFailedException](assertCompiles("MyBox.optionalCatsFunctorForMyBox")) // inacessible
+    val t2 = intercept[TestFailedException](assertCompiles("MyMonad.optionalMyMonadFromCatsMonad")) // inacessible
+    assert(t1.getMessage.contains("implicit") || t1.getMessage.contains("given"))
+    assert(t2.getMessage.contains("implicit") || t1.getMessage.contains("given"))
   }
 
   "non-cats summons work" in {
     implicitly[MyMonad[List]] // non-optional summon from MyMonad object works
     implicitly[MyMonad[MyBox]] // non-optional summon from MyBox object works
     implicitly[MyBox[Unit] =:= MyBox[Unit]] // non-optional summon from MyBox object works
-//    implicitly[TestTC[MyBox]]
+    assertTypeError("implicitly[TestTC[MyBox]]")
     // [error] 22 |    implicitly[TestTC[MyBox]]
     // [error]    |                             ^
     // [error]    |no implicit argument of type TestTC[mylib.MyBox] was found for parameter ev of method implicitly in object DottyPredef.

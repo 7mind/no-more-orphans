@@ -8,7 +8,6 @@ import org.scalatest.wordspec.AnyWordSpec
 import scala.language.implicitConversions
 
 class CatsMyMonadMyBoxTest extends AnyWordSpec {
-  implicit val Pos: Position = Position("", "", 1)
 
   "cats.Functor instance for MyBox works" in {
     assertResult(MyBox(5).map(_ + 5), "")(MyBox(10))

@@ -10,7 +10,6 @@ import org.scalactic.source.Position
 import scala.language.implicitConversions
 
 class CatsMyResourceTest extends AnyWordSpec {
-  implicit val Pos: Position = Position("", "", 1)
 
   "cats-specific syntax is automatically accessible" in {
     val resource = MyResource.make(Try(1))(_ => Try(()))

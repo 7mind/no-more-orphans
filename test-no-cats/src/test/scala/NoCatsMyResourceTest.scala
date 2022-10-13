@@ -1,6 +1,5 @@
 
-import mylib.MyResource
-import org.scalactic.source.Position
+import mylib._
 import org.scalatest.wordspec.AnyWordSpec
 
 import scala.util.Try
@@ -8,7 +7,6 @@ import scala.util.Try
 import scala.language.implicitConversions
 
 class NoCatsMyResourceTest extends AnyWordSpec {
-  implicit val Pos: Position = Position("", "", 1)
 
   "non-cats methods are accessible, but cats syntax isn't" in {
     val resource = MyResource.make(Try(1))(_ => Try(()))
@@ -17,6 +15,10 @@ class NoCatsMyResourceTest extends AnyWordSpec {
 //    resource.toCats // inaccessible
   }
 
+  "non-optional summons for MyResource" in {
+    implicitly[MyResource[Option, Int] =:= MyResource[Option, Int]] // non-optional summon from MyIntSet object works
+    assertTypeError("implicitly[TC[MyResource[Option, Int]]]")
+  }
 }
 
 //Error:(12, 5) Symbol 'type cats.effect.Resource' is missing from the classpath.
